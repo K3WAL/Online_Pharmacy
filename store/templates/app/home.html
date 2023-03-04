@@ -1,0 +1,103 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}Home{% endblock title %}
+
+{% block main-content %}
+<!-- Hero Section -->
+<section id="hero">
+    <h4>Trade-in-offer</h4>
+    <h2>Super Value deals</h2>
+    <h1>On all Product</h1>
+    <p>save more with coupons & up to 70% off! </p>
+    <a href="{% url 'home' %}"><button>Shop Now</button></a>
+</section>
+<!-- Feature Section  -->
+<section id="feature" class="section-p1">
+    <div class="fe-box">
+        <img src="{% static 'app/images/features/f1.png' %}" alt="">
+        <h6>Online Order</h6>
+    </div>
+    <div class="fe-box">
+        <img src="{% static 'app/images/features/f2.png' %}" alt="">
+        <h6>Free Shipping</h6>
+    </div>
+    <div class="fe-box">
+        <img src="{% static 'app/images/features/f3.png' %}" alt="">
+        <h6>Save Money</h6>
+    </div>
+    <div class="fe-box">
+        <img src="{% static 'app/images/features/f4.png' %}" alt="">
+        <h6>Promotion</h6>
+    </div>
+    <div class="fe-box">
+        <img src="{% static 'app/images/features/f5.png' %}" alt="">
+        <h6>Happy Sell</h6>
+    </div>
+    <div class="fe-box">
+        <img src="{% static 'app/images/features/f6.png' %}" alt="">
+        <h6>F24/7 Support</h6>
+    </div>
+</section>
+<section id="product1" class="section-p1">
+    <h2>Popular Product</h2>
+    <div class="pro-container">
+      {% for product in ayurvedics %}
+        <div class="pro">
+            <a href="{% url 'product-detail' product.id %}"><img src="{{product.product_image.url}}"  alt=""></a>
+            <div class="des">
+                <span>{{product.collection}}</span>
+                <h5>{{product.title}}</h5>
+                <h4>Rs. {{product.selling_price}}</h4>
+            </div>
+        </div>
+        {% endfor %}
+      </div>
+  <nav aria-label="Page navigation example">
+    <ul class="pagination justify-content-center">
+  {% if ayurvedics.has_previous %}
+    <li class="page-item">
+      <a class="page-link" href="?page={{ ayurvedics.previous_page_number }}" aria-label="Previous">
+      <span aria-hidden="true">&laquo;</span>
+       </a>
+    </li>
+    {% endif %}
+    <span class="page-link">
+  {{ ayurvedics.number }}
+     </span>
+    {% if ayurvedics.has_next %}
+    <li class="page-item">
+      <a class="page-link" href="?page={{ ayurvedics.next_page_number }}" aria-label="Next">
+    <span aria-hidden="true">&raquo;</span>
+    </a>
+    </li>
+    {% endif %}
+    </ul>
+    </nav>
+  </section>
+  <section id="banner" class="section-m1">
+    <h4>Repair Service</h4>
+    <h2>up to <span>70%off</span></h2>
+    <button class="normal">Explore More</button>
+</section>
+<div class="m-3">
+    <h2>Personal Care</h2>
+    <!-- Slider 1 -->
+    <div class="owl-carousel" id="slider1">
+     {% for product in personal_cares %}
+     <a href="{% url 'product-detail' product.id %}" class="btn"><div class="item"><img src="{{product.product_image.url}}" alt="" height="200px">
+       <span class="fw-bold">{{product.title}}</span><br><span class="fs-5">Rs.{{product.selling_price}}</span></div></a>
+       {% endfor %}
+   </div>
+   </div>
+   <div class="mx-3">
+    <h2>Devices</h2>
+    <!-- Slider 2 -->
+    <div class="owl-carousel" id="slider1">
+     {% for p in devices %}
+     <a href="{% url 'product-detail' p.id %}" class="btn"><div class="item"><img src="{{p.product_image.url}}" alt="" height="200px">
+       <span class="fw-bold">{{p.title}}</span><br><span class="fs-5">Rs.{{p.selling_price}}</span></div></a>
+       {% endfor %}
+   </div>
+   </div>
+{% endblock main-content %}
+

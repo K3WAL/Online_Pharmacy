@@ -1,0 +1,74 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}Contact Us {% endblock title %}
+<link rel="stylesheet" href="{% static 'app/css/all.min.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'app/css/main.css' %}">
+
+{% block main-content %}
+{% for message in messages %}
+<div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+    <strong>Message: </strong> {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  {% endfor %}
+
+<!-- Hero Section -->
+<section id="page-header" class="about-header">
+    <h2>#Let's_talk</h2>
+    <p>LEAVE A MESSAGE, We love to hear from you!</p>
+</Section>
+<section id="contact-details" class="section-p1">
+    <div class="details">
+        <span>GET IN TOUCH</span>     
+        <h2>Visit us today</h2>
+        <h3>Details</h3>
+        <div>
+            <li>
+                <i class="fa-solid fa-map"></i>
+                <p>Pulchowk, Lalitpur</p>
+            </li>
+            <li>
+                <i class="fa-solid fa-envelope"></i>
+                <p>Pharma@example.com</p>
+            </li>
+            <li>
+                <i class="fa-solid fa-phone"></i>
+                <p>+977 9812345678</p>
+            </li>
+            <li>
+                <i class="fa-solid fa-clock"></i>
+                <p>5:00am to 22:00pm</p>
+            </li>
+        </div>
+    </div>
+    <div class="map">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7066.692232527263!2d85.3199333737343!3d27.67569546817379!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39eb19cbbeac9357%3A0x8f35a679609cb5b9!2sPulchowk%2C%20Lalitpur%2044600!5e0!3m2!1sen!2snp!4v1656614514259!5m2!1sen!2snp" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+</section>
+<section id="form-details">
+    <form method="post" action="/contact/">
+        {% csrf_token %}
+        <span>LEAVE A MESSAGE</span>
+        <h2>We love to hear from you</h2>
+        <input type="text" name="name" placeholder="Your Name">
+        <input type="text" name="email" placeholder="E-mail">
+        <input type="text" name="subject" placeholder="Subject">
+        <textarea name="content" id="" cols="30" rows="10" placeholder="Your Message"></textarea>
+        <button type="submit" class="btn btn-primary" style="width: 250px;">Submit</button>
+    </form>
+    <div class="people">
+        <div>
+            <img src="{% static 'app/images/members/i.png' %}" width="100px" alt="">
+            <p><span> Kewal Tamang</span>Manager <Br> Phone: +977 9812345678 <br> Email: KewalUchiha@mail.com</p>
+        </div>
+        <div>
+            <img src="{% static 'app/images/members/mem.png' %}" width="100px" alt="">
+            <p><span> Iraj Tuladhar</span>Senior Marketing Manager <Br> Phone: +977 9800000000 <br> Email: example@mail.com</p>
+        </div>
+        <div>
+            <img src="{% static 'app/images/members/m1.jpg' %}" width="100px" alt="">
+            <p><span> Sanjeep Jirel</span>Manager <Br> Phone: +977 9811111111 <br> Email: MonekeyDUchiha@mail.com</p>
+        </div>
+    </div>
+</section>
+{% endblock main-content %}

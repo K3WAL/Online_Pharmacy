@@ -1,0 +1,205 @@
+<!doctype html>
+{% load static %}
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+
+    <!--Owl Carousel CSS-->
+    <link rel="stylesheet" href="{% static 'app/css/owl.carousel.min.css' %}">
+
+    <!--FontAwesome CSS-->
+    <link rel="stylesheet" href="{% static 'app/css/all.min.css' %}">
+    <script src="https://kit.fontawesome.com/6dfb982a52.js" crossorigin="anonymous"></script>
+
+    <!--Custom CSS-->
+    <link rel="stylesheet" href="{% static 'app/css/style.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'app/css/main.css' %}">
+
+    <title>Pharmacy | {% block title %} {% endblock title %} </title>
+  </head>
+  <body>
+ 
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+     <div class="container">
+      <a class="navbar-brand" href="{% url 'index' %}"><img src="{% static 'app/images/logo.png' %}" alt=""></a>
+       <a class="navbar-brand" href="{% url 'index' %}">HamroMED</a>
+       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+         <span class="navbar-toggler-icon"></span>
+       </button>
+       <div class="collapse navbar-collapse" id="navbarSupportedContent">
+         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          {% if request.user.is_authenticated %}
+           <li class="nav-item">
+             <a class="nav-link active" aria-current="page" href="{% url 'home' %}">Home</a>
+           </li>
+           {% endif %}
+           <li class="nav-item dropdown">
+             <a class="nav-link dropdown-toggle text-white" href="#" id="electronicsDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+               Collections
+             </a>
+             <ul class="dropdown-menu" aria-labelledby="electronicsDropdown">
+               <li><a class="dropdown-item" href="{% url 'covid' %}">Covid Essential</a></li>
+               <li><a class="dropdown-item" href="{% url 'family' %}">Family Care</a></li>
+               <li><a class="dropdown-item" href="{% url 'personal' %}">Personal Care</a></li>
+               <li><a class="dropdown-item" href="{% url 'ayurvedic' %}">Ayurvedic</a></li>
+               <li><a class="dropdown-item" href="{% url 'surgical' %}">Surgical</a></li>
+               <li><a class="dropdown-item" href="{% url 'devices' %}">Devices</a></li>
+               <li><a class="dropdown-item" href="{% url 'immunity' %}">Immunity Booster</a></li>
+               <li><a class="dropdown-item" href="{% url 'wellness' %}">Sexual Wellness</a></li>
+               <li><a class="dropdown-item" href="{% url 'medicine' %}">Medicine</a></li>
+             </ul>
+           </li>
+           <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url 'about' %}">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="{% url 'contact' %}">Contact</a>
+          </li>
+         </ul>
+         <div class="container">
+          <div class="row">
+            <div class="col-md-6 mx-auto">
+              <form action="/search/" method="GET" style="display:flex;">
+                <input type="text" name="keyword" placeholder="Search Product Here..." required>
+                <button class="btn btn-warning" type="submit"> <i class="fas fa-search"></i></button>
+              </form>
+            </div>
+            
+          </div>
+          
+         </div>
+
+<!-- Prescription Uploa -->
+
+    <div class="upload-pres pull-right" style="display:flex;">
+      <button class="custom-button upload-btn" id="upload-btn" onclick="document.getElementById('formFile').click()"
+            class="custom-btn shadow-md mb-2"><i class="fa-solid fa-file-medical" style="display:inline;"></i>Prescription</button>
+        <form method="post" action="/prescription/" enctype="multipart/form-data" class="flex justify-center"> 
+          {% csrf_token %}
+            <input name="imagefile" re accept="image/*" type="file" id="formFile"
+                style="display: none;">
+            <button type="submit" class="custom-button upload-btn">Submit</button>
+        </form>
+    </div>
+
+         <div>
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            {% if request.user.is_authenticated %}
+           <li class="nav-item dropdown mx-2">
+              <a class="nav-link dropdown-toggle text-white" href="#" id="profileDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                {{request.user.username|capfirst}}
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="profileDropdown">
+                <li><a class="dropdown-item" href="{% url 'profile' %}">Profile</a></li>
+                <li><a class="dropdown-item" href="{% url 'orders' %}">Orders</a></li>
+                <li><a class="dropdown-item" href="{% url 'changepassword' %}">Change Password</a></li>
+                <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
+              </ul>
+            </li>
+            <li class="nav-item mx-2">
+             <a href="{% url 'showcart' %}"  class="nav-link text-white"  style="display:flex;"><span class="badge bg-danger">{{totalitem}}</span><i class="fa-solid fa-cart-shopping"></i></a>
+            </li>
+          
+</div>
+    
+            {% else %}
+            <li class="nav-item mx-2">
+             <a href="{% url 'login' %}" class="nav-link text-white">Login</a>
+            </li>
+            <li class="nav-item mx-2">
+             <a href="{% url 'customerregistration' %}" class="nav-link text-white">Registration</a>
+            </li>
+            {% endif %}
+          </ul>
+         </div>
+       </div>
+     </div>
+    </nav>
+    {% for message in messages %}
+<div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+    <strong>Message: </strong> {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+  </div>
+  {% endfor %}
+    {% block banner_slider %} {% endblock banner_slider %}
+    {% block livesale %} {% endblock livesale %}
+    {% block main-content %} {% endblock main-content %}
+    {% block payment-gateway %} {% endblock payment-gateway%}
+    <!-- News Letter -->
+    <section id="newsletter" class="section-p1 section-m1">
+      <div class="newstext">
+          <h4>Sign Up For Newsletters</h4>
+          <p>Get E-mail updates about our latest shop and <span>special offers.</span> </p>
+      </div>
+      <form class="form" method="post" action="/newsletter/" >
+         {% csrf_token %}
+          <input type="text" name="email" placeholder="Your email Address">
+          <button type="submit" class="normal">Sign Up</button>
+      </form>
+  </section>
+    <!-- Start Footer -->
+    <footer class="section-p1">            
+      <div class="col">
+          <h4><strong>Contact</strong></h4>
+          <p><strong>Address:</strong> Pulchowl, Lalitpur</p>
+          <p><strong>Phone:</strong> +977 9812345678</p>
+          <p><strong>Hours:</strong> 6:00 - 18:00 </p>
+          <div class="follow">
+              <h4>Follow us</h4>
+              <div class="icon">
+                  <a href="https://www.facebook.com/"><i class="fab fa-facebook-f"></i></a>
+                  <a href="https://twitter.com/"><i class="fab fa-twitter"></i></a>
+                 <a href="https://www.instagram.com/"><i class="fab fa-instagram"></i></a> 
+              </div>
+          </div>
+      </div>
+      <div class="col">
+          <h4><strong>About</strong></h4>
+          <a href="{% url 'about' %}">About Us</a>
+          <a href="/orders/">Delivery Information</a>
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms & Conditions</a>
+          <a href="https://www.sgu.edu/blog/medical/top-medical-blogs/">Blogs</a>
+          <a href="{% url 'contact' %}">Contact Us</a>
+      </div>
+      <div class="col">
+          <h4><strong>My Account</strong></h4>
+          <a href="{% url 'customerregistration' %}">Sign In</a>
+          <a href="{% url 'showcart' %}">View Cart</a>
+          <a href="#">My Wishlist</a>
+          <a href="/orders/">Track my Order</a>
+          <a href="#">Help</a>
+      </div>
+      <div class="col install">
+          <h4><strong>Install App</strong></h4>
+          <p>From App Store or Google Play</p>
+          <div class="row">
+              <img src="{% static 'app/images/pay/app.jpg' %}" alt="" width="40px"; height="40px";>
+              <img src="{% static 'app/images/pay/play.jpg' %}" alt="" width="40px"; height="40px";>
+          </div>
+          <div class="row">
+            <p><strong>Secure Payment Gateways</strong></p>
+          <img class="" src="{% static 'app/images/pay/khalti.PNG' %}" alt="" width="40px"; height="40px">
+          </div>
+      </div>
+      <div class="copyright">
+          <p> &copy 2022, Kewal</p>
+      </div>
+  </footer>
+
+    <!-- Jquery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <!-- Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+
+    <script src="{% static 'app/js/owl.carousel.min.js' %}"></script>
+    <script src="{% static 'app/js/all.min.js' %}"></script>
+    <script src="{% static 'app/js/myscript.js' %}"></script>
+  </body>   
+
+</html>

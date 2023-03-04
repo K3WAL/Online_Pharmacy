@@ -1,0 +1,45 @@
+{% extends 'app/base.html' %}
+{% load static %}
+{% block title %}Surgical{% endblock title %}
+<script src="https://kit.fontawesome.com/6dfb982a52.js" crossorigin="anonymous"></script>
+<link rel="stylesheet" type="text/css" href="{% static 'app/css/main.css' %}">
+
+{% block main-content %}
+<section id="product1" class="section-p1">
+  <h2>Surgical</h2>
+  <div class="pro-container">
+    {% for product in surgicals %}
+      <div class="pro">
+          <a href="{% url 'product-detail' product.id %}"><img src="{{product.product_image.url}}"  alt=""></a>
+          <div class="des">
+              <span>{{product.collection}}</span>
+              <h5>{{product.title}}</h5>
+              <h4>Rs. {{product.selling_price}}</h4>
+          </div>
+      </div>
+      {% endfor %}
+    </div>
+<nav aria-label="Page navigation example">
+  <ul class="pagination justify-content-center">
+{% if surgicals.has_previous %}
+  <li class="page-item">
+    <a class="page-link" href="?page={{ surgicals.previous_page_number }}" aria-label="Previous">
+    <span aria-hidden="true">&laquo;</span>
+     </a>
+  </li>
+  {% endif %}
+  <span class="page-link">
+{{ surgicals.number }}
+   </span>
+  {% if surgicals.has_next %}
+  <li class="page-item">
+    <a class="page-link" href="?page={{ surgicals.next_page_number }}" aria-label="Next">
+  <span aria-hidden="true">&raquo;</span>
+  </a>
+  </li>
+  {% endif %}
+  </ul>
+  </nav>
+</section>
+
+{% endblock main-content %}

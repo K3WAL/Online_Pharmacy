@@ -1,0 +1,67 @@
+{% extends 'app/base.html' %} {% load static %} 
+{% block title %}Search 
+{% endblock title %} 
+{% block main-content %}
+
+<!-- <ul>
+  <li>Make sure that all words are spelled correctly.</li>
+  <li>Try different keywords.</li>
+  <li>Try more general keywords.</li>
+  <li>Try Fewer keywords.</li>
+</ul> -->
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <h3>
+        Search Results for
+        <span class="text-info">"{{request.GET.keyword}}"</span>
+      </h3>
+      <hr />
+      {% for result in results %}
+      <div class="row">
+        <div class="col-md-3">
+          <a href="{% url 'product-detail' result.id %}"
+            ><img src="{{result.product_image.url}}" class="img-fluid" alt=""
+          /></a>
+        </div>
+        <div class="col-md-9">
+          <h4>{{result.title}}</h4>
+          <p>{{result.description|truncatewords:50}}</p>
+          <p>Rs. {{result.selling_price}}</p>
+        </div>
+      </div>
+      <hr />
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<nav aria-label="Page navigation example">
+  <ul class="pagination justify-content-center">
+    {% if results.has_previous %}
+    <li class="page-item">
+      <a
+        class="page-link"
+        href="?page={{ results.previous_page_number }}"
+        aria-label="Previous"
+      >
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    {% endif %}
+    <span class="page-item"> {{ results.number }} </span>
+    {% if results.has_next %}
+    <li class="page-item">
+      <a
+        class="page-link"
+        href="?page={{ results.next_page_number }}"
+        aria-label="Next"
+      >
+        <span aria-hidden="true">&raquo;</span>
+      </a>
+    </li>
+    {% endif %}
+  </ul>
+</nav>
+
+{% endblock main-content %}
